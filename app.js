@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -27,6 +28,15 @@ app.set('views', path.join(__dirname, 'views'));
 console.log(process.env.NODE_ENV);
 
 //GLOBAL MIDDLEWARES
+//CORS for get and post
+app.use(cors());
+
+//API-api.natours.com Frontend-natours.com
+// app.use(cors({origin:'https://www.natours.com'}))
+
+//CORS for patch,delete
+app.options('*', cors());
+// app.options('/api/v1/tours/:id', cors()); - for specific route
 
 //serving static files
 // app.use(express.static(`${__dirname}/public`));
