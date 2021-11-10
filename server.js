@@ -39,3 +39,11 @@ process.on('unhandledRejection', (err) => {
     process.exit(1); //code 0-success, 1-uncaught exception
   });
 });
+
+//Heroku shuts down every 24 hours by sending SIGTERM signal
+process.on('SIGTERM', () => {
+  console.log('SIGTERM RECEIVED. Shutting down gracefully!');
+  server.close(() => {
+    console.log('Process terminated!');
+  });
+});
